@@ -613,7 +613,7 @@ plt.ylabel('Revenue')
 
 
 
-![png](output_18_1.png)
+![png](ReadMe/output_18_1.png)
 
 
 
@@ -646,7 +646,7 @@ plt.ylabel('Total Average Rate')
 
 
 
-![png](output_22_1.png)
+![png](ReadMe/output_22_1.png)
 
 
 ### Extra Step
@@ -666,7 +666,7 @@ plt.legend();
 ```
 
 
-![png](output_25_0.png)
+![png](ReadMe/output_25_0.png)
 
 
 ### Question 3 (production companies revenue vs budget (loss or gain))
@@ -699,7 +699,7 @@ companies_revenue.plot(title='Revenue vs Budget');
 ```
 
 
-![png](output_29_0.png)
+![png](ReadMe/output_29_0.png)
 
 
 
@@ -713,7 +713,7 @@ plt.legend();
 ```
 
 
-![png](output_30_0.png)
+![png](ReadMe/output_30_0.png)
 
 
 
