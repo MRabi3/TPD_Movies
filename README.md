@@ -36,6 +36,8 @@ The final two columns ending with “_adj” show the budget and revenue of the 
 ##### production companies revenue vs budget (loss or gain)
 
 
+#### import statements for all of the packages we need to run the project
+
 
 ```python
 # import statements for all of the packages
@@ -45,11 +47,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as snb
 %matplotlib inline
-
-
-
-
-
 ```
 
 
@@ -58,11 +55,24 @@ import seaborn as snb
 !pip install --upgrade pandas==0.25.0
 ```
 
-    Requirement already up-to-date: pandas==0.25.0 in /opt/conda/lib/python3.6/site-packages (0.25.0)
-    Requirement already satisfied, skipping upgrade: python-dateutil>=2.6.1 in /opt/conda/lib/python3.6/site-packages (from pandas==0.25.0) (2.6.1)
-    Requirement already satisfied, skipping upgrade: numpy>=1.13.3 in /opt/conda/lib/python3.6/site-packages (from pandas==0.25.0) (1.19.5)
+    Collecting pandas==0.25.0
+    [?25l  Downloading https://files.pythonhosted.org/packages/1d/9a/7eb9952f4b4d73fbd75ad1d5d6112f407e695957444cb695cbb3cdab918a/pandas-0.25.0-cp36-cp36m-manylinux1_x86_64.whl (10.5MB)
+    [K    100% |████████████████████████████████| 10.5MB 3.2MB/s eta 0:00:01   33% |██████████▉                     | 3.5MB 28.7MB/s eta 0:00:01    47% |███████████████                 | 4.9MB 28.9MB/s eta 0:00:01    60% |███████████████████▎            | 6.3MB 29.4MB/s eta 0:00:01    73% |███████████████████████▌        | 7.7MB 30.0MB/s eta 0:00:01    99% |███████████████████████████████▊| 10.4MB 28.3MB/s eta 0:00:01
+    [?25hCollecting numpy>=1.13.3 (from pandas==0.25.0)
+    [?25l  Downloading https://files.pythonhosted.org/packages/45/b2/6c7545bb7a38754d63048c7696804a0d947328125d81bf12beaa692c3ae3/numpy-1.19.5-cp36-cp36m-manylinux1_x86_64.whl (13.4MB)
+    [K    100% |████████████████████████████████| 13.4MB 2.7MB/s eta 0:00:01   24% |███████▊                        | 3.2MB 27.3MB/s eta 0:00:01    62% |████████████████████            | 8.3MB 26.5MB/s eta 0:00:01
+    [?25hRequirement already satisfied, skipping upgrade: python-dateutil>=2.6.1 in /opt/conda/lib/python3.6/site-packages (from pandas==0.25.0) (2.6.1)
     Requirement already satisfied, skipping upgrade: pytz>=2017.2 in /opt/conda/lib/python3.6/site-packages (from pandas==0.25.0) (2017.3)
     Requirement already satisfied, skipping upgrade: six>=1.5 in /opt/conda/lib/python3.6/site-packages (from python-dateutil>=2.6.1->pandas==0.25.0) (1.11.0)
+    [31mtensorflow 1.3.0 requires tensorflow-tensorboard<0.2.0,>=0.1.0, which is not installed.[0m
+    Installing collected packages: numpy, pandas
+      Found existing installation: numpy 1.12.1
+        Uninstalling numpy-1.12.1:
+          Successfully uninstalled numpy-1.12.1
+      Found existing installation: pandas 0.23.3
+        Uninstalling pandas-0.23.3:
+          Successfully uninstalled pandas-0.23.3
+    Successfully installed numpy-1.19.5 pandas-0.25.0
 
 
 <a id='wrangling'></a>
@@ -73,9 +83,11 @@ import seaborn as snb
 ### General Properties
 
 
+Load data from  tmdb-movies.csv file
+
 
 ```python
-#load data from csv file and check the null values volume
+
 df= pd.read_csv('Database_TMDb_movie_data/tmdb-movies.csv')
 df.info()
 ```
@@ -108,155 +120,79 @@ df.info()
     memory usage: 1.7+ MB
 
 
+Check the statistics for the data frame
+
 
 ```python
-# Check the statistics for the data frame
 df.describe()
 ```
 
 
+    ---------------------------------------------------------------------------
+
+    TypeError                                 Traceback (most recent call last)
+
+    /opt/conda/lib/python3.6/site-packages/IPython/core/formatters.py in __call__(self, obj)
+        343             method = get_real_method(obj, self.print_method)
+        344             if method is not None:
+    --> 345                 return method()
+        346             return None
+        347         else:
 
 
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>id</th>
-      <th>popularity</th>
-      <th>budget</th>
-      <th>revenue</th>
-      <th>runtime</th>
-      <th>vote_count</th>
-      <th>vote_average</th>
-      <th>release_year</th>
-      <th>budget_adj</th>
-      <th>revenue_adj</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>count</th>
-      <td>10866.000000</td>
-      <td>10866.000000</td>
-      <td>1.086600e+04</td>
-      <td>1.086600e+04</td>
-      <td>10866.000000</td>
-      <td>10866.000000</td>
-      <td>10866.000000</td>
-      <td>10866.000000</td>
-      <td>1.086600e+04</td>
-      <td>1.086600e+04</td>
-    </tr>
-    <tr>
-      <th>mean</th>
-      <td>66064.177434</td>
-      <td>0.646441</td>
-      <td>1.462570e+07</td>
-      <td>3.982332e+07</td>
-      <td>102.070863</td>
-      <td>217.389748</td>
-      <td>5.974922</td>
-      <td>2001.322658</td>
-      <td>1.755104e+07</td>
-      <td>5.136436e+07</td>
-    </tr>
-    <tr>
-      <th>std</th>
-      <td>92130.136561</td>
-      <td>1.000185</td>
-      <td>3.091321e+07</td>
-      <td>1.170035e+08</td>
-      <td>31.381405</td>
-      <td>575.619058</td>
-      <td>0.935142</td>
-      <td>12.812941</td>
-      <td>3.430616e+07</td>
-      <td>1.446325e+08</td>
-    </tr>
-    <tr>
-      <th>min</th>
-      <td>5.000000</td>
-      <td>0.000065</td>
-      <td>0.000000e+00</td>
-      <td>0.000000e+00</td>
-      <td>0.000000</td>
-      <td>10.000000</td>
-      <td>1.500000</td>
-      <td>1960.000000</td>
-      <td>0.000000e+00</td>
-      <td>0.000000e+00</td>
-    </tr>
-    <tr>
-      <th>25%</th>
-      <td>10596.250000</td>
-      <td>0.207583</td>
-      <td>0.000000e+00</td>
-      <td>0.000000e+00</td>
-      <td>90.000000</td>
-      <td>17.000000</td>
-      <td>5.400000</td>
-      <td>1995.000000</td>
-      <td>0.000000e+00</td>
-      <td>0.000000e+00</td>
-    </tr>
-    <tr>
-      <th>50%</th>
-      <td>20669.000000</td>
-      <td>0.383856</td>
-      <td>0.000000e+00</td>
-      <td>0.000000e+00</td>
-      <td>99.000000</td>
-      <td>38.000000</td>
-      <td>6.000000</td>
-      <td>2006.000000</td>
-      <td>0.000000e+00</td>
-      <td>0.000000e+00</td>
-    </tr>
-    <tr>
-      <th>75%</th>
-      <td>75610.000000</td>
-      <td>0.713817</td>
-      <td>1.500000e+07</td>
-      <td>2.400000e+07</td>
-      <td>111.000000</td>
-      <td>145.750000</td>
-      <td>6.600000</td>
-      <td>2011.000000</td>
-      <td>2.085325e+07</td>
-      <td>3.369710e+07</td>
-    </tr>
-    <tr>
-      <th>max</th>
-      <td>417859.000000</td>
-      <td>32.985763</td>
-      <td>4.250000e+08</td>
-      <td>2.781506e+09</td>
-      <td>900.000000</td>
-      <td>9767.000000</td>
-      <td>9.200000</td>
-      <td>2015.000000</td>
-      <td>4.250000e+08</td>
-      <td>2.827124e+09</td>
-    </tr>
-  </tbody>
-</table>
-</div>
+    /opt/conda/lib/python3.6/site-packages/pandas/core/frame.py in _repr_html_(self)
+        694     @Substitution(shared_params=fmt.common_docstring, returns=fmt.return_docstring)
+        695     def to_string(
+    --> 696         self,
+        697         buf=None,
+        698         columns=None,
 
 
+    /opt/conda/lib/python3.6/site-packages/pandas/core/frame.py in to_html(self, buf, columns, col_space, header, index, na_rep, formatters, float_format, sparsify, index_names, justify, bold_rows, classes, escape, max_rows, max_cols, show_dimensions, notebook, decimal, border, table_id)
+       2035             Default is latin-1. Unicode is not supported.
+       2036         byteorder : str
+    -> 2037             Can be ">", "<", "little", or "big". default is `sys.byteorder`.
+       2038         time_stamp : datetime
+       2039             A datetime to use as file creation date.  Default is the current
+
+
+    /opt/conda/lib/python3.6/site-packages/pandas/io/formats/format.py in to_html(self, classes, notebook, border)
+        751         else:
+        752             nrows = len(self.frame)
+    --> 753 
+        754         str_lst = []
+        755         st = 0
+
+
+    TypeError: __init__() got an unexpected keyword argument 'max_rows'
+
+
+
+
+
+                      id    popularity        budget       revenue       runtime  \
+    count   10866.000000  10866.000000  1.086600e+04  1.086600e+04  10866.000000   
+    mean    66064.177434      0.646441  1.462570e+07  3.982332e+07    102.070863   
+    std     92130.136561      1.000185  3.091321e+07  1.170035e+08     31.381405   
+    min         5.000000      0.000065  0.000000e+00  0.000000e+00      0.000000   
+    25%     10596.250000      0.207583  0.000000e+00  0.000000e+00     90.000000   
+    50%     20669.000000      0.383856  0.000000e+00  0.000000e+00     99.000000   
+    75%     75610.000000      0.713817  1.500000e+07  2.400000e+07    111.000000   
+    max    417859.000000     32.985763  4.250000e+08  2.781506e+09    900.000000   
+    
+             vote_count  vote_average  release_year    budget_adj   revenue_adj  
+    count  10866.000000  10866.000000  10866.000000  1.086600e+04  1.086600e+04  
+    mean     217.389748      5.974922   2001.322658  1.755104e+07  5.136436e+07  
+    std      575.619058      0.935142     12.812941  3.430616e+07  1.446325e+08  
+    min       10.000000      1.500000   1960.000000  0.000000e+00  0.000000e+00  
+    25%       17.000000      5.400000   1995.000000  0.000000e+00  0.000000e+00  
+    50%       38.000000      6.000000   2006.000000  0.000000e+00  0.000000e+00  
+    75%      145.750000      6.600000   2011.000000  2.085325e+07  3.369710e+07  
+    max     9767.000000      9.200000   2015.000000  4.250000e+08  2.827124e+09  
+
+
+
+Check the number of columns and rows for the dataframe
 
 
 ```python
@@ -270,6 +206,8 @@ df.shape
     (10866, 21)
 
 
+
+Get the number of NA/Null values for each feature
 
 
 ```python
@@ -327,6 +265,8 @@ the dataframe to calculate the average revenue and top rated movies
 '''
 df.dropna(subset=['cast','director'], how='any',inplace=True)
 ```
+
+Check features after drop the NA
 
 
 ```python
@@ -395,6 +335,8 @@ df.isnull().sum()
 
 
 
+Add new column Main Actor by applying lamda function to split the cast cell by | and get the first one
+
 
 ```python
 # Add column Main Actor/Actress by applying lamda function to split the cast cell by | and get the first one
@@ -409,174 +351,105 @@ df.head()
 ```
 
 
+    ---------------------------------------------------------------------------
+
+    TypeError                                 Traceback (most recent call last)
+
+    /opt/conda/lib/python3.6/site-packages/IPython/core/formatters.py in __call__(self, obj)
+        343             method = get_real_method(obj, self.print_method)
+        344             if method is not None:
+    --> 345                 return method()
+        346             return None
+        347         else:
 
 
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
+    /opt/conda/lib/python3.6/site-packages/pandas/core/frame.py in _repr_html_(self)
+        694     @Substitution(shared_params=fmt.common_docstring, returns=fmt.return_docstring)
+        695     def to_string(
+    --> 696         self,
+        697         buf=None,
+        698         columns=None,
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
 
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>id</th>
-      <th>imdb_id</th>
-      <th>popularity</th>
-      <th>budget</th>
-      <th>revenue</th>
-      <th>original_title</th>
-      <th>cast</th>
-      <th>homepage</th>
-      <th>director</th>
-      <th>tagline</th>
-      <th>...</th>
-      <th>runtime</th>
-      <th>genres</th>
-      <th>production_companies</th>
-      <th>release_date</th>
-      <th>vote_count</th>
-      <th>vote_average</th>
-      <th>release_year</th>
-      <th>budget_adj</th>
-      <th>revenue_adj</th>
-      <th>MainActor</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>135397</td>
-      <td>tt0369610</td>
-      <td>32.985763</td>
-      <td>150000000</td>
-      <td>1513528810</td>
-      <td>Jurassic World</td>
-      <td>Chris Pratt|Bryce Dallas Howard|Irrfan Khan|Vi...</td>
-      <td>http://www.jurassicworld.com/</td>
-      <td>Colin Trevorrow</td>
-      <td>The park is open.</td>
-      <td>...</td>
-      <td>124</td>
-      <td>Action|Adventure|Science Fiction|Thriller</td>
-      <td>Universal Studios|Amblin Entertainment|Legenda...</td>
-      <td>6/9/15</td>
-      <td>5562</td>
-      <td>6.5</td>
-      <td>2015</td>
-      <td>1.379999e+08</td>
-      <td>1.392446e+09</td>
-      <td>Chris Pratt</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>76341</td>
-      <td>tt1392190</td>
-      <td>28.419936</td>
-      <td>150000000</td>
-      <td>378436354</td>
-      <td>Mad Max: Fury Road</td>
-      <td>Tom Hardy|Charlize Theron|Hugh Keays-Byrne|Nic...</td>
-      <td>http://www.madmaxmovie.com/</td>
-      <td>George Miller</td>
-      <td>What a Lovely Day.</td>
-      <td>...</td>
-      <td>120</td>
-      <td>Action|Adventure|Science Fiction|Thriller</td>
-      <td>Village Roadshow Pictures|Kennedy Miller Produ...</td>
-      <td>5/13/15</td>
-      <td>6185</td>
-      <td>7.1</td>
-      <td>2015</td>
-      <td>1.379999e+08</td>
-      <td>3.481613e+08</td>
-      <td>Tom Hardy</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>262500</td>
-      <td>tt2908446</td>
-      <td>13.112507</td>
-      <td>110000000</td>
-      <td>295238201</td>
-      <td>Insurgent</td>
-      <td>Shailene Woodley|Theo James|Kate Winslet|Ansel...</td>
-      <td>http://www.thedivergentseries.movie/#insurgent</td>
-      <td>Robert Schwentke</td>
-      <td>One Choice Can Destroy You</td>
-      <td>...</td>
-      <td>119</td>
-      <td>Adventure|Science Fiction|Thriller</td>
-      <td>Summit Entertainment|Mandeville Films|Red Wago...</td>
-      <td>3/18/15</td>
-      <td>2480</td>
-      <td>6.3</td>
-      <td>2015</td>
-      <td>1.012000e+08</td>
-      <td>2.716190e+08</td>
-      <td>Shailene Woodley</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>140607</td>
-      <td>tt2488496</td>
-      <td>11.173104</td>
-      <td>200000000</td>
-      <td>2068178225</td>
-      <td>Star Wars: The Force Awakens</td>
-      <td>Harrison Ford|Mark Hamill|Carrie Fisher|Adam D...</td>
-      <td>http://www.starwars.com/films/star-wars-episod...</td>
-      <td>J.J. Abrams</td>
-      <td>Every generation has a story.</td>
-      <td>...</td>
-      <td>136</td>
-      <td>Action|Adventure|Science Fiction|Fantasy</td>
-      <td>Lucasfilm|Truenorth Productions|Bad Robot</td>
-      <td>12/15/15</td>
-      <td>5292</td>
-      <td>7.5</td>
-      <td>2015</td>
-      <td>1.839999e+08</td>
-      <td>1.902723e+09</td>
-      <td>Harrison Ford</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>168259</td>
-      <td>tt2820852</td>
-      <td>9.335014</td>
-      <td>190000000</td>
-      <td>1506249360</td>
-      <td>Furious 7</td>
-      <td>Vin Diesel|Paul Walker|Jason Statham|Michelle ...</td>
-      <td>http://www.furious7.com/</td>
-      <td>James Wan</td>
-      <td>Vengeance Hits Home</td>
-      <td>...</td>
-      <td>137</td>
-      <td>Action|Crime|Thriller</td>
-      <td>Universal Pictures|Original Film|Media Rights ...</td>
-      <td>4/1/15</td>
-      <td>2947</td>
-      <td>7.3</td>
-      <td>2015</td>
-      <td>1.747999e+08</td>
-      <td>1.385749e+09</td>
-      <td>Vin Diesel</td>
-    </tr>
-  </tbody>
-</table>
-<p>5 rows × 22 columns</p>
-</div>
+    /opt/conda/lib/python3.6/site-packages/pandas/core/frame.py in to_html(self, buf, columns, col_space, header, index, na_rep, formatters, float_format, sparsify, index_names, justify, bold_rows, classes, escape, max_rows, max_cols, show_dimensions, notebook, decimal, border, table_id)
+       2035             Default is latin-1. Unicode is not supported.
+       2036         byteorder : str
+    -> 2037             Can be ">", "<", "little", or "big". default is `sys.byteorder`.
+       2038         time_stamp : datetime
+       2039             A datetime to use as file creation date.  Default is the current
+
+
+    /opt/conda/lib/python3.6/site-packages/pandas/io/formats/format.py in to_html(self, classes, notebook, border)
+        751         else:
+        752             nrows = len(self.frame)
+    --> 753 
+        754         str_lst = []
+        755         st = 0
+
+
+    TypeError: __init__() got an unexpected keyword argument 'max_rows'
+
+
+
+
+
+           id    imdb_id  popularity     budget     revenue  \
+    0  135397  tt0369610   32.985763  150000000  1513528810   
+    1   76341  tt1392190   28.419936  150000000   378436354   
+    2  262500  tt2908446   13.112507  110000000   295238201   
+    3  140607  tt2488496   11.173104  200000000  2068178225   
+    4  168259  tt2820852    9.335014  190000000  1506249360   
+    
+                     original_title  \
+    0                Jurassic World   
+    1            Mad Max: Fury Road   
+    2                     Insurgent   
+    3  Star Wars: The Force Awakens   
+    4                     Furious 7   
+    
+                                                    cast  \
+    0  Chris Pratt|Bryce Dallas Howard|Irrfan Khan|Vi...   
+    1  Tom Hardy|Charlize Theron|Hugh Keays-Byrne|Nic...   
+    2  Shailene Woodley|Theo James|Kate Winslet|Ansel...   
+    3  Harrison Ford|Mark Hamill|Carrie Fisher|Adam D...   
+    4  Vin Diesel|Paul Walker|Jason Statham|Michelle ...   
+    
+                                                homepage          director  \
+    0                      http://www.jurassicworld.com/   Colin Trevorrow   
+    1                        http://www.madmaxmovie.com/     George Miller   
+    2     http://www.thedivergentseries.movie/#insurgent  Robert Schwentke   
+    3  http://www.starwars.com/films/star-wars-episod...       J.J. Abrams   
+    4                           http://www.furious7.com/         James Wan   
+    
+                             tagline        ...        runtime  \
+    0              The park is open.        ...            124   
+    1             What a Lovely Day.        ...            120   
+    2     One Choice Can Destroy You        ...            119   
+    3  Every generation has a story.        ...            136   
+    4            Vengeance Hits Home        ...            137   
+    
+                                          genres  \
+    0  Action|Adventure|Science Fiction|Thriller   
+    1  Action|Adventure|Science Fiction|Thriller   
+    2         Adventure|Science Fiction|Thriller   
+    3   Action|Adventure|Science Fiction|Fantasy   
+    4                      Action|Crime|Thriller   
+    
+                                    production_companies release_date vote_count  \
+    0  Universal Studios|Amblin Entertainment|Legenda...       6/9/15       5562   
+    1  Village Roadshow Pictures|Kennedy Miller Produ...      5/13/15       6185   
+    2  Summit Entertainment|Mandeville Films|Red Wago...      3/18/15       2480   
+    3          Lucasfilm|Truenorth Productions|Bad Robot     12/15/15       5292   
+    4  Universal Pictures|Original Film|Media Rights ...       4/1/15       2947   
+    
+      vote_average  release_year    budget_adj   revenue_adj         MainActor  
+    0          6.5          2015  1.379999e+08  1.392446e+09       Chris Pratt  
+    1          7.1          2015  1.379999e+08  3.481613e+08         Tom Hardy  
+    2          6.3          2015  1.012000e+08  2.716190e+08  Shailene Woodley  
+    3          7.5          2015  1.839999e+08  1.902723e+09     Harrison Ford  
+    4          7.3          2015  1.747999e+08  1.385749e+09        Vin Diesel  
+    
+    [5 rows x 22 columns]
 
 
 
@@ -586,20 +459,26 @@ df.head()
 
 ### Research Question 1 (top acrtors achieved revenue in their movies)
 
+group by Main actor and sum the revenue per actor.
+
 
 ```python
 #group by Main actor and sum the revenue per actor.
 top_actors = df.groupby('MainActor')['revenue'].sum().sort_values(ascending=False)
 ```
 
+Get Top 5 actors
+
 
 ```python
 top_actors =top_actors.head(5)
 ```
 
+Present the 5 actors with top revenues
+
 
 ```python
-top_actors.plot(kind='bar',title="Top Actors", label='Actor');
+top_actors.plot(kind='bar',title="Top Actors Revenues", label='Actor');
 plt.xlabel("Actors")
 plt.ylabel('Revenue')
 
@@ -613,15 +492,12 @@ plt.ylabel('Revenue')
 
 
 
-![png](ReadMe/output_18_1.png)
+![png](ReadMe/output_28_1.png)
 
-
-
-```python
-
-```
 
 ### Research Question 2 (who the director has top rated movies)
+
+group by directors to get the average of the vote average column for all movies directed by them.
 
 
 ```python
@@ -629,6 +505,8 @@ plt.ylabel('Revenue')
 
 top_five_directors=df.groupby('director')['vote_average'].mean().sort_values(ascending=False).head(5)
 ```
+
+Present the directors have top rated movies
 
 
 ```python
@@ -646,7 +524,7 @@ plt.ylabel('Total Average Rate')
 
 
 
-![png](ReadMe/output_22_1.png)
+![png](ReadMe/output_33_1.png)
 
 
 ### Extra Step
@@ -657,6 +535,8 @@ Comparing between the actors and directors for the top rated movies
 top_five_actors=df.groupby('MainActor')['vote_average'].mean().sort_values(ascending=False).head(5)
 ```
 
+the below chart view the relation between top rated movies for actors vs top rated movies for directors, if the blue and orange are the same hight , then both director and actor the cause to succuss this movie
+
 
 ```python
 top_five_directors.hist(alpha=0.5, bins=20, color='orange' ,label='Director');
@@ -666,10 +546,12 @@ plt.legend();
 ```
 
 
-![png](ReadMe/output_25_0.png)
+![png](ReadMe/output_37_0.png)
 
 
 ### Question 3 (production companies revenue vs budget (loss or gain))
+
+this question show the relation between budjet and revenue for production companies, is the companies gaining profit or lose
 
 
 ```python
@@ -686,6 +568,8 @@ def fillNAWithValue(df,colName,ValueToFill):
     
 ```
 
+fill the NA in production companies to be Other companies
+
 
 ```python
 #Fill NA with Other word
@@ -695,12 +579,8 @@ fillNAWithValue(df,'production_companies','Other')
 
 ```python
 companies_revenue = df.groupby('production_companies')[['production_companies','revenue_adj','budget_adj']].tail(5)
-companies_revenue.plot(title='Revenue vs Budget');
+
 ```
-
-
-![png](ReadMe/output_29_0.png)
-
 
 
 ```python
@@ -713,48 +593,31 @@ plt.legend();
 ```
 
 
-![png](ReadMe/output_30_0.png)
+![png](ReadMe/output_44_0.png)
 
 
-
-```python
-fig, ax = plt.subplots(figsize =(8,6))
-ax.hist(companies_revenue['revenue_adj'], alpha=0.5, label='benign')
-ax.hist(companies_revenue['budget_adj'], alpha=0.5, label='malignant')
-ax.set_title('Revenue vs budget')
-
-ax.set_ylabel('budget / revenue')
-ax.legend(loc='upper right')
-plt.show();
-```
-
-
-![png](ReadMe/output_31_0.png)
-
-
-
-```python
-
-```
+Revenue vs budget are skeweed to the right, that means few companies are having most of the profits from the movies production
 
 <a id='conclusions'></a>
 ## Conclusions
 
-> **Tip**: Finally, summarize your findings and the results that have been performed in relation to the question(s) provided at the beginning of the analysis. Summarize the results accurately, and point out where additional research can be done or where additional information could be useful.
+Last, after reviewing the movies and the revenue, we got the below:
 
-> **Tip**: Make sure that you are clear with regards to the limitations of your exploration. You should have at least 1 limitation explained clearly. 
+1- popular actor and good director may be great factor to increase the revenue and get numerous positive ratings.
+2- few companies in the movies prodcution gaining most of the revenue, but they have huge budgets.
 
-> **Tip**: If you haven't done any statistical tests, do not imply any statistical conclusions. And make sure you avoid implying causation from correlation!
 
-> **Tip**: Once you are satisfied with your work here, check over your report to make sure that it is satisfies all the areas of the rubric (found on the project submission page at the end of the lesson). You should also probably remove all of the "Tips" like this one so that the presentation is as polished as possible.
+
+
+
+
+
+
+
 
 ## Submitting your Project 
 
-> **Tip**: Before you submit your project, you need to create a .html or .pdf version of this notebook in the workspace here. To do that, run the code cell below. If it worked correctly, you should get a return code of 0, and you should see the generated .html file in the workspace directory (click on the orange Jupyter icon in the upper left).
 
-> **Tip**: Alternatively, you can download this report as .html via the **File** > **Download as** submenu, and then manually upload it into the workspace directory by clicking on the orange Jupyter icon in the upper left, then using the Upload button.
-
-> **Tip**: Once you've done this, you can submit your project by clicking on the "Submit Project" button in the lower right here. This will create and submit a zip file with this .ipynb doc and the .html or .pdf version you created. Congratulations!
 
 
 ```python
